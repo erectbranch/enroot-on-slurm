@@ -18,6 +18,8 @@ This project offers a comprehensive guide to using Enroot on Slurm cluster for d
 
 ## 🚩 Documentation
 
+- [1 - Introduction to UBAI HPC Cluster](https://github.com/erectbranch/enroot-on-slurm/tree/master/doc/01_UBAI)
+
 ---
 
 ## 🔧 Tools
