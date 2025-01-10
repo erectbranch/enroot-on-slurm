@@ -24,6 +24,8 @@ This project offers a comprehensive guide to using Enroot on Slurm cluster for d
 
 - [3 - Using Jupyter Lab on Slurm](https://github.com/erectbranch/enroot-on-slurm/tree/master/doc/03_jupyterlab)
 
+- [4 - Using Docker Container with Enroot](https://github.com/erectbranch/enroot-on-slurm/tree/master/doc/04_enroot)
+
 ---
 
 ## 🔧 Tools
