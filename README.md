@@ -28,6 +28,8 @@ This project offers a comprehensive guide to using Enroot on Slurm cluster for d
 
 - [5 - PyTorch Training with NGC Container](https://github.com/erectbranch/enroot-on-slurm/tree/master/doc/05_ngc)
 
+- [6 - PyTorch Distributed Training on Slurm](https://github.com/erectbranch/enroot-on-slurm/tree/master/doc/06_standalone)
+
 ---
 
 ## 🔧 Tools
