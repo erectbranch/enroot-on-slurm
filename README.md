@@ -9,7 +9,7 @@
 ## 💡 Introduction
 
 <h3 align="center">
-  <img width="50%" src="images/main.png" alt="Enroot on Slurm">
+  <img width="80%" src="images/main.png" alt="Enroot on Slurm">
 </h3>
 
 This project offers a comprehensive guide to using Enroot on Slurm cluster for deep learning tasks. It includes a detailed job script that demonstrates how to set up and run a distributed deep learning job using Enroot and Slurm.
