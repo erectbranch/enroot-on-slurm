@@ -36,7 +36,7 @@ This project offers a comprehensive guide to using Enroot on Slurm cluster for d
 
 | Tool Name | Description |
 | --------- | ----------- |
-| Script with Push Notification | Work in progress |
+| [Script with Push Notification](https://github.com/erectbranch/enroot-on-slurm/tree/master/tools/notification) | Send push notification to your IOS device when the Slurm job starts |
 | Wandb on Slurm | Work in progress |
 
 ---
