@@ -19,12 +19,10 @@ class ToyModel(nn.Module):
 
 
 def demo_basic():
-    device_id = int(os.environ["LOCAL_RANK"])
-    torch.cuda.set_device(device_id)
-
-    # 1. get the world size and rank from environment variables
-    world_size = int(os.getenv('WORLD_SIZE', '1'))
+    # 1. get the local rank and rank from environment variables
+    local_rank = int(os.environ["LOCAL_RANK"])
     rank = int(os.getenv('RANK', '0'))
+    world_size = int(os.getenv('WORLD_SIZE', '1'))
 
     # 2. define the init method
     init_method = 'tcp://'
@@ -39,16 +37,19 @@ def demo_basic():
         rank=rank,
         init_method=init_method,
     )
-    torch.distributed.barrier()
+    torch.cuda.set_device(local_rank)
+    dist.barrier()
 
-    model = ToyModel().to(device_id)
-    ddp_model = DDP(model, device_ids=[device_id])
+    DEVICE = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
+
+    model = ToyModel().to(DEVICE)
+    ddp_model = DDP(model, device_ids=[local_rank], output_device=rank)
     loss_fn = nn.MSELoss()
     optimizer = optim.SGD(ddp_model.parameters(), lr=0.001)
 
     optimizer.zero_grad()
     outputs = ddp_model(torch.randn(20, 10))
-    labels = torch.randn(20, 5).to(device_id)
+    labels = torch.randn(20, 5).to(DEVICE)
     loss_fn(outputs, labels).backward()
     optimizer.step()
     dist.destroy_process_group()

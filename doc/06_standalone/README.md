@@ -13,9 +13,10 @@ To run a PyTorch model in parallel across multiple GPUs, we can use the `torch.d
 import os
 import torch
 
-# 1. get the world size and rank from environment variables
-world_size = int(os.getenv('WORLD_SIZE', '1'))
+# 1. get the rank and world_size from environment variables
+local_rank = int(os.environ["LOCAL_RANK"])
 rank = int(os.getenv('RANK', '0'))
+world_size = int(os.getenv('WORLD_SIZE', '1'))
 
 # 2. define the init method
 init_method = 'tcp://'
@@ -163,8 +164,7 @@ torchrun --standalone \
          --node_rank $NODE_RANK \
          --master_addr $MASTER_ADDR \
          --master_port $MASTER_PORT \
-         train.py -np $NPROC_PER_NODE \
-                  -n $NNODES
+         train.py
 ```
 
 ---

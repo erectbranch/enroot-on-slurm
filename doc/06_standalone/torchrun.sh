@@ -11,11 +11,12 @@ export MASTER_PORT=$MASTER_PORT
 . env.sh
 export WORLD_SIZE=$WORLD_SIZE
 
+export OMP_NUM_THREADS=1
+
 torchrun --standalone \
          --nnodes $NNODES \
          --nproc_per_node $NPROC_PER_NODE \
          --node_rank $NODE_RANK \
          --master_addr $MASTER_ADDR \
          --master_port $MASTER_PORT \
-         train.py -np $NPROC_PER_NODE \
-                  -n $NNODES
+         train.py 
