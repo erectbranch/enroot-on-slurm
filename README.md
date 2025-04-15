@@ -30,6 +30,8 @@ This project offers a comprehensive guide to using Enroot on Slurm cluster for d
 
 - [6 - PyTorch Distributed Training on Slurm](https://github.com/erectbranch/enroot-on-slurm/tree/master/doc/06_standalone)
 
+- [7 - Multi-node LLM Training with Wandb](https://github.com/erectbranch/enroot-on-slurm/tree/master/doc/07_multinode)
+
 ---
 
 ## 🔧 Tools
@@ -37,7 +39,6 @@ This project offers a comprehensive guide to using Enroot on Slurm cluster for d
 | Tool Name | Description |
 | --------- | ----------- |
 | [Script with Push Notification](https://github.com/erectbranch/enroot-on-slurm/tree/master/tools/notification) | Send push notification to your IOS device when the Slurm job starts |
-| Wandb on Slurm | Work in progress |
 
 ---
 
@@ -50,6 +51,8 @@ This project offers a comprehensive guide to using Enroot on Slurm cluster for d
 - [The Slurm tool "pestat"](https://github.com/OleHolmNielsen/Slurm_tools/tree/master/pestat)
 
 - [UBAI HPC cluster User Manual](https://ubai.uos.ac.kr/)
+
+- [LambdaLabsML: Distributed Training Guide](https://github.com/LambdaLabsML/distributed-training-guide)
 
 ---
 
