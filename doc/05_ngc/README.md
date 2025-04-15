@@ -4,7 +4,7 @@
 
 ---
 
-## 5.2 Environment Setup
+## 5.1 Environment Setup
 
 First, access the node using `srun` command to run the Enroot commands. The example command will access the node on the `gpu4` partition with 1 GPU(A6000) and 8 CPU cores.
 
@@ -18,7 +18,7 @@ $ nvidia-smi
 
 ---
 
-### 5.2.1 NGC Authentication
+### 5.1.1 NGC Authentication
 
 > **Note**: You must get the authentication token from NGC website to pull the container image.
 
@@ -37,7 +37,7 @@ machine authn.nvidia.com login $oauthtoken password {your-ngc-token}
 
 ---
 
-### 5.2.2 Importing NGC Container Image
+### 5.1.2 Importing NGC Container Image
 
 For example, to import the [pytorch:24.06-py3 image](https://docs.nvidia.com/deeplearning/frameworks/pytorch-release-notes/rel-24-06.html), use the following command:
 
@@ -59,7 +59,7 @@ $ enroot list
 
 ---
 
-## 5.3 (Example) PyTorch Model Training
+## 5.2 (Example) PyTorch Model Training
 
 > [PyTorch Examples - MNIST](https://github.com/pytorch/examples/blob/main/mnist/main.py)
 
