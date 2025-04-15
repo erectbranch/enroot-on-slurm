@@ -19,8 +19,9 @@ rank = int(os.getenv('RANK', '0'))
 world_size = int(os.getenv('WORLD_SIZE', '1'))
 
 # 2. define the init method
+# master_ip: The FQDN of the host that is running worker with rank 0.
 init_method = 'tcp://'
-master_ip   = os.getenv('MASTER_ADDR', 'localhost')    # os.getenv(key, default)
+master_ip   = os.getenv('MASTER_ADDR', 'localhost')
 master_port = os.getenv('MASTER_PORT', '8000')
 init_method += master_ip + ':' + master_port
 
@@ -151,7 +152,43 @@ enroot start --root --rw \
 
 ---
 
-### 6.2.4 torchrun Script (torchrun.sh)
+## 6.3 torchrun (Elastic Launch)
+
+> [PyTorch: torchrun (Elastic Launch)](https://pytorch.org/docs/stable/elastic/run.html)
+
+`torchrun` provides a superset of the functionality as `torch.distributed.launch`. When using `torchrun`, the worker `RANK`, `LOCAL_RANK` and `WORLD_SIZE` are automatically set for you.
+
+```python
+# Example functions to get the rank, local rank and world size
+import os
+
+def get_rank() -> int:
+    return int(os.environ["RANK"])
+
+def get_local_rank() -> int:
+    return int(os.environ["LOCAL_RANK"])
+
+def get_world_size() -> int:
+    return int(os.environ["WORLD_SIZE"])
+```
+
+---
+
+### 6.3.1 (Recommended) @record decorator
+
+We also add a `@record` decorator to the `train.py` script to record the train function. On worker failure, this tool will summarize the details of the error (e.g. time, rank, host, pid, traceback, etc).
+
+```python
+from torch.distributed.elastic.multiprocessing.errors import record
+
+@record
+def main():
+    ...
+```
+
+---
+
+### 6.3.2 torchrun Script (torchrun.sh)
 
 > **Note**: `--standalone` is used for single-node multi-GPU training.
 
@@ -169,9 +206,41 @@ torchrun --standalone \
 
 ---
 
-### 6.2.5 Slurm Job Submission
+### 6.3.3 Utilize OpenMP Threads
+
+> [PyTorch: Performance Tuning Guide](https://pytorch.org/tutorials/recipes/recipes/tuning_guide.html#utilize-openmp)
+
+The `OMP_NUM_THREADS` environment variable is used to set the number of threads used for **OpenMP** computations. It affects communication overhead, cache line invalidation overhead, or page thrashing.
+
+```bash
+# torchrun.sh
+export OMP_NUM_THREADS=1
+```
+
+Without limiting the number of threads, the PyTorch will spawn many threads for each GPU, which can lead to performance degradation.
+
+---
+
+## 6.4 Run the Example Script
 
 > **Note**: The job script is submitted using the `sbatch` command.
+
+The `train.py` script is a simple toy model training script. 
+
+```python
+# train.py
+class ToyModel(nn.Module):
+    def __init__(self):
+        super(ToyModel, self).__init__()
+        self.net1 = nn.Linear(10, 10)
+        self.relu = nn.ReLU()
+        self.net2 = nn.Linear(10, 5)
+
+    def forward(self, x):
+        return self.net2(self.relu(self.net1(x)))
+```
+
+To run the example job, you need to submit the `run_script.sh` script using the `sbatch` command.
 
 ```bash
 $ sbatch run_script.sh

@@ -6,6 +6,7 @@ import torch.nn as nn
 import torch.optim as optim
 
 from torch.nn.parallel import DistributedDataParallel as DDP
+from torch.distributed.elastic.multiprocessing.errors import record
 
 class ToyModel(nn.Module):
     def __init__(self):
@@ -17,8 +18,8 @@ class ToyModel(nn.Module):
     def forward(self, x):
         return self.net2(self.relu(self.net1(x)))
 
-
-def demo_basic():
+@record
+def main():
     # 1. get the local rank and rank from environment variables
     local_rank = int(os.environ["LOCAL_RANK"])
     rank = int(os.getenv('RANK', '0'))
@@ -57,4 +58,4 @@ def demo_basic():
     print(f"Finished running basic DDP example on rank {rank}.")
 
 if __name__ == "__main__":
-    demo_basic()
+    main()
